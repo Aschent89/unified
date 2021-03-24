@@ -2356,7 +2356,7 @@ int NWNX_Creature_GetBypassEffectImmunity(object oCreature, int nImmunityType)
     return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
 }
 
-void NWNX_Creature_SetNumberOfBonusSpells(object oCreature, int nClass, int nSpellLevel, nQuantity)
+void NWNX_Creature_SetNumberOfBonusSpells(object oCreature, int nClass, int nSpellLevel, int nQuantity)
 {
     string sFunc = "SetNumberOfBonusSpells";
 
