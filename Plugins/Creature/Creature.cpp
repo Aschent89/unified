@@ -2962,8 +2962,8 @@ NWNX_EXPORT ArgumentStack SetNumberOfBonusSpells(ArgumentStack&& args)
     if (auto* pCreature = Utils::PopCreature(args))
     {
         const auto classId = args.extract<int32_t>();
-		    ASSERT_OR_THROW(classType >= Constants::ClassType::MIN);
-		    ASSERT_OR_THROW(classType <= Constants::ClassType::MAX);
+		    ASSERT_OR_THROW(classId >= Constants::ClassType::MIN);
+		    ASSERT_OR_THROW(classId <= Constants::ClassType::MAX);
 		auto spellLevel = args.extract<int32_t>();
 		    ASSERT_OR_THROW(spellLevel >= 0);
 		    ASSERT_OR_THROW(spellLevel < 10);
