@@ -2999,7 +2999,7 @@ NWNX_EXPORT ArgumentStack GetNumberOfBonusSpells(ArgumentStack&& args)
         {
             auto& classInfo = pCreature->m_pStats->m_ClassInfo[i];
             if (classInfo.m_nClass == classType)
-                return pCreature->m_pStats->GetNumberOfBonusSpells(i, spellLevel);
+                return classInfo.GetNumberBonusSpells(spellLevel);
         }
     }
     return 0;
