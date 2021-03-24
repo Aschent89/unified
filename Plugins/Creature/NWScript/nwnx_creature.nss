@@ -2355,3 +2355,25 @@ int NWNX_Creature_GetBypassEffectImmunity(object oCreature, int nImmunityType)
     NWNX_CallFunction(NWNX_Creature, sFunc);
     return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
 }
+
+void NWNX_Creature_SetNumberOfBonusSpells(object oCreature, int nClass, int nSpellLevel, nQuantity)
+{
+    string sFunc = "SetNumberOfBonusSpells";
+
+    NWNX_PushArgumentObject(NWNX_Creature, sFunc, oCreature);
+    NWNX_PushArgumentInt(NWNX_Creature, sFunc, nClass);
+    NWNX_PushArgumentInt(NWNX_Creature, sFunc, nSpellLevel);
+    NWNX_PushArgumentInt(NWNX_Creature, sFunc, nQuantity);
+    NWNX_CallFunction(NWNX_Creature, sFunc);
+}
+
+int NWNX_Creature_GetNumberOfBonusSpells(object oCreature, int nClass, int nSpellLevel)
+{
+    string sFunc = "GetNumberOfBonusSpells";
+
+    NWNX_PushArgumentObject(NWNX_Creature, sFunc, oCreature);
+    NWNX_PushArgumentInt(NWNX_Creature, sFunc, nClass);
+    NWNX_PushArgumentInt(NWNX_Creature, sFunc, nSpellLevel);
+    NWNX_CallFunction(NWNX_Creature, sFunc);
+    return NWNX_GetReturnValueInt(NWNX_Creature, sFunc);
+}

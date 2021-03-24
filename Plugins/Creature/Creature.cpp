@@ -2956,3 +2956,50 @@ NWNX_EXPORT ArgumentStack GetBypassEffectImmunity(ArgumentStack&& args)
     }
     return 0;
 }
+
+NWNX_EXPORT ArgumentStack SetNumberOfBonusSpells(ArgumentStack&& args)
+{
+    if (auto* pCreature = Utils::PopCreature(args))
+    {
+        const auto classId = args.extract<int32_t>();
+		    ASSERT_OR_THROW(classType >= Constants::ClassType::MIN);
+		    ASSERT_OR_THROW(classType <= Constants::ClassType::MAX);
+		auto spellLevel = args.extract<int32_t>();
+		    ASSERT_OR_THROW(spellLevel >= 0);
+		    ASSERT_OR_THROW(spellLevel < 10);
+        const auto quantitySpells = args.extract<int32_t>();
+            ASSERT_OR_THROW(quantitySpells >= 0);
+            ASSERT_OR_THROW(quantitySpells <= 255);
+
+        for (int32_t i = 0; i < 3; i++)
+        {
+            auto& classInfo = pCreature->m_pStats->m_ClassInfo[i];
+            if (classInfo.m_nClass == classId)
+            {
+                classInfo.ModifyNumberBonusSpells(static_cast<uint8_t>(spellLevel), static_cast<uint8_t>(quantitySpells));
+                break;
+            }
+        }
+    }
+    return {};
+}
+
+NWNX_EXPORT ArgumentStack GetNumberOfBonusSpells(ArgumentStack&& args)
+{
+    if (auto* pCreature = Utils::PopCreature(args))
+    {
+        auto classType = args.extract<int32_t>();
+		    ASSERT_OR_THROW(classType >= Constants::ClassType::MIN);
+		    ASSERT_OR_THROW(classType <= Constants::ClassType::MAX);
+        auto spellLevel = args.extract<int32_t>();
+            ASSERT_OR_THROW(spellLevel >= 0);
+            ASSERT_OR_THROW(spellLevel < 10);
+
+        for (int32_t i = 0; i < 3; i++)
+        {
+            auto& classInfo = pCreature->m_pStats->m_ClassInfo[i];
+            if (classInfo.m_nClass == classType)
+                return pCreature->m_pStats->GetNumberOfBonusSpells(i, spellLevel);
+        }
+    }
+}
