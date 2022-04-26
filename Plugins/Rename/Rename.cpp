@@ -442,7 +442,8 @@ void Rename::GlobalNameChange(
                                 playerInfo->m_sPlayerName = CExoString(m_RenameAnonymousPlayerName.c_str());
                                 break;
                             default:
-                                playerInfo->m_sPlayerName = std::get<0>(g_plugin->m_RenameOriginalNames[targetOid]);
+                                playerInfo->m_sPlayerName = CExoString(m_RenameAnonymousPlayerName.c_str());
+                                //playerInfo->m_sPlayerName = std::get<0>(g_plugin->m_RenameOriginalNames[targetOid]);
                         }
                     }
                 }

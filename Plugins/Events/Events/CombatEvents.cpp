@@ -18,12 +18,14 @@ static Hooks::Hook s_ApplyDisarmHook;
 static Hooks::Hook s_SendServerToPlayerAmbientBattleMusicPlayHook;
 static Hooks::Hook s_SendFeedbackMessageHook;
 static Hooks::Hook s_SetCombatModeHook;
+//static Hooks::Hook s_ApplyAttackOfOpportunityHook;
 
 static void StartCombatRoundHook(CNWSCombatRound*, ObjectID);
 static int32_t ApplyDisarmHook(CNWSEffectListHandler*, CNWSObject*, CGameEffect*, BOOL);
 static int32_t SendServerToPlayerAmbientBattleMusicPlayHook(CNWSMessage*, PlayerID, BOOL);
 static void SendFeedbackMessageHook(CNWSCreature*, uint16_t, CNWCCMessageData*, CNWSPlayer*);
 static void SetCombatModeHook(CNWSCreature*, uint8_t, int32_t);
+//static int32_t ApplyAoOHook(CNWSEffectListHandler*, CNWSObject*, CGameEffect*, BOOL);
 
 void CombatEvents() __attribute__((constructor));
 void CombatEvents()
@@ -51,6 +53,10 @@ void CombatEvents()
                 API::Functions::_ZN12CNWSCreature13SetCombatModeEhi,
                 (void*)&SetCombatModeHook, Hooks::Order::Early);
     });
+    // InitOnFirstSubscribe("NWNX_ON_ATTACK_OF_OPPORTUNITY_.*", []() {
+    //     s_ApplyAttackOfOpportunityHook = Hooks::HookFunction(API::Functions::_ZN15CNWSCombatRound22AddAttackOfOpportunityEj,
+    //                                                 (void*)&ApplyAoOHook, Hooks::Order::Early);
+    // })
 }
 
 void StartCombatRoundHook(CNWSCombatRound* thisPtr, ObjectID oidTarget)
@@ -164,5 +170,31 @@ void SetCombatModeHook(CNWSCreature* thisPtr, uint8_t nMode, int32_t bForceMode)
 
     s_SetCombatModeHook->CallOriginal<void>(thisPtr, nMode, bForceMode);
 }
+
+// int32_t ApplyAoOHook(CNWSEffectListHandler* pEffectHandler, CNWSObject *pObject, CGameEffect *pEffect, BOOL bLoadingGame)
+// {
+//     int32_t retVal;
+
+//     auto PushAndSignal = [&](const std::string& ev) -> bool {
+//         PushEventData("AOO_ATTACKER_OBJECT_ID", Utils::ObjectIDToString(pEffect->m_oidCreator));
+//         auto nFeatId = pEffect->GetInteger(0) == 1 ? Constants::Feat::ImprovedDisarm : Constants::Feat::Disarm;
+//         PushEventData("FEAT_ID", std::to_string(nFeatId));
+//         return SignalEvent(ev, pObject->m_idSelf);
+//     };
+
+//     if (PushAndSignal("NWNX_ON_DISARM_BEFORE"))
+//     {
+//         retVal = s_ApplyAttackOfOpportunityHook->CallOriginal<int32_t>(pEffectHandler, pObject, pEffect, bLoadingGame);
+//     }
+//     else
+//     {
+//         retVal = false;
+//     }
+
+//     PushEventData("ACTION_RESULT", std::to_string(retVal));
+//     PushAndSignal("NWNX_ON_DISARM_AFTER");
+
+//     return retVal;
+// }
 
 }

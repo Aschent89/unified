@@ -249,7 +249,8 @@ static BOOL SendServerToPlayerGameObjUpdate(CNWSMessage* msg, CNWSPlayer *pPlaye
         return false;
 
     static uint32_t msgLimit = Config::Get<uint32_t>("GAMEOBJUPDATE_MESSAGE_LIMIT", 1024);
-    msg->CreateWriteMessage(msgLimit + 1024, pPlayer->m_nPlayerID, true);
+    //msg->CreateWriteMessage(msgLimit + 1024, pPlayer->m_nPlayerID, true);
+    msg->CreateWriteMessage(msgLimit + 1024, player->m_nPlayerID, true);
 
     DeleteLastUpdateObjectsInOtherAreas(msg, pPlayer);
     auto& tbl = GetLuoTable(pPlayer);
@@ -303,6 +304,7 @@ static BOOL SendServerToPlayerGameObjUpdate(CNWSMessage* msg, CNWSPlayer *pPlaye
                 // ASSERT(area); // This really should not be possible.
                 auto ShouldUpdateObject = [&](CNWSObject* obj) -> bool
                 {
+                    LOG_WARNING("ERROR: Entered default in switch");
                     if (tbl.Get(obj->m_idSelf))
                         return true;
 
