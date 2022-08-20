@@ -106,5 +106,17 @@ void ClientGameObjectUpdateTime()
         }
     }, Hooks::Order::Final);
 }
+    NWNX_EXPORT Events::ArgumentStack SetCGOUpdateTimes(Events::ArgumentStack&& args)
+    {
+        const auto updateTime = args.extract<int32_t>();
+        const auto updateTimeLoading = args.extract<int32_t>();
 
+        if (updateTime > 0)
+            s_ClientGameObjectUpdateTime = (uint64_t)updateTime;
+
+        if (updateTimeLoading > 0)
+            s_ClientGameObjectUpdateTimeLoading = (uint64_t)updateTimeLoading;
+
+        return {};
+    }
 }
