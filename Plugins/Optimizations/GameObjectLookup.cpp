@@ -67,7 +67,6 @@ OBJECT_ID FindObjectByTagOrdinal(CNWSModule*, const CExoString &sTag, uint32_t n
         if (nNth > 0 && sTag == s_lastTag && s_lastNth == nNth - 1)
         {
             bucketIter = std::next(s_lastIter);
-            
         }
         else
         {
@@ -78,7 +77,7 @@ OBJECT_ID FindObjectByTagOrdinal(CNWSModule*, const CExoString &sTag, uint32_t n
         s_lastNth = nNth;
         s_lastIter = bucketIter;
 
-        return nNth < bucket.size() ? *bucketIter: OBJECT_INVALID;
+        return nNth < bucket.size() ? *bucketIter : OBJECT_INVALID;
     }
 
     return OBJECT_INVALID;
