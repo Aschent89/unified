@@ -31,6 +31,8 @@
 #include <chrono>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <fstream>
+#include <iostream>
 
 using namespace NWNXLib;
 using namespace NWNXLib::API;
@@ -814,9 +816,16 @@ NWNX_EXPORT ArgumentStack AddJSONFile(ArgumentStack&& args)
         alias = "NWNX";
     }
 
-    auto file = CExoFile((alias + ":" + fileName).c_str(), "w");
+    std::string filePath = alias + ":" + fileName + ".json";
+    std::ofstream file(filePath);
+    bool bOk = file.is_open() && file << contents;
+    if (bOk)
+        file.close();
+    return bOk;
+
+ /*   auto file = CExoFile((alias + ":" + fileName).c_str(), Constants::ResRefType::NSS, "w");
     bool bOk = file.FileOpened() && file.Write(contents) && file.Flush();
     if (bOk)
         Globals::ExoResMan()->UpdateResourceDirectory(alias + ":");
-    return bOk;
+    return bOk;*/
 }
