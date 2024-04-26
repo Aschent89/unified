@@ -822,8 +822,7 @@ NWNX_EXPORT ArgumentStack AddJSONFile(ArgumentStack&& args)
 
     LOG_INFO("Filepath used for JSON: %s", filePath);
 
-    // std::ofstream file(filePath);
-    auto file = std::ofstream file(filePath);
+    std::ofstream file(filePath);
     bool bOk = file.is_open(); 
     if (bOk)
     {
