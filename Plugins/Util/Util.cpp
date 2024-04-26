@@ -818,11 +818,9 @@ NWNX_EXPORT ArgumentStack AddJSONFile(ArgumentStack&& args)
 
     std::string filePath = g_pExoBase->m_pcExoAliasList->GetAliasPath(alias);
 
-    // std::string filePath = "./" + alias + "/" + fileName + ".json";
-
     LOG_INFO("Filepath used for JSON: %s", filePath);
 
-    std::ofstream file(filePath + fileName);
+    std::ofstream file(filePath + fileName + ".json");
     bool bOk = file.is_open(); 
     if (bOk)
     {
