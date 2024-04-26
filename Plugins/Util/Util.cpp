@@ -818,14 +818,12 @@ NWNX_EXPORT ArgumentStack AddJSONFile(ArgumentStack&& args)
 
     std::string filePath = alias + ":" + fileName + ".json";
     std::ofstream file(filePath);
-    bool bOk = file.is_open() && file << contents;
+    bool bOk = file.is_open(); 
     if (bOk)
+    {
+        file << contents;
         file.close();
-    return bOk;
-
- /*   auto file = CExoFile((alias + ":" + fileName).c_str(), Constants::ResRefType::NSS, "w");
-    bool bOk = file.FileOpened() && file.Write(contents) && file.Flush();
-    if (bOk)
         Globals::ExoResMan()->UpdateResourceDirectory(alias + ":");
-    return bOk;*/
+    }
+    return bOk;
 }
