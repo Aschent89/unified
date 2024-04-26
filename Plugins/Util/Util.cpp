@@ -814,7 +814,7 @@ NWNX_EXPORT ArgumentStack AddJSONFile(ArgumentStack&& args)
         alias = "NWNX";
     }
 
-    auto file = CExoFile((alias + ":" + fileName + ".json").c_str(), "w");
+    auto file = CExoFile((alias + ":" + fileName).c_str(), "w");
     bool bOk = file.FileOpened() && file.Write(contents) && file.Flush();
     if (bOk)
         Globals::ExoResMan()->UpdateResourceDirectory(alias + ":");
