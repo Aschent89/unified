@@ -816,7 +816,8 @@ NWNX_EXPORT ArgumentStack AddJSONFile(ArgumentStack&& args)
         alias = "NWNX";
     }
 
-    std::string filePath = "./" + alias + "/" + fileName + ".json";
+    //std::string filePath = "./" + alias + "/" + fileName + ".json";
+    std::string filePath = (alias + ":" + fileName).c_str();
 
     LOG_INFO("Filepath used for JSON: %s", filePath);
 
