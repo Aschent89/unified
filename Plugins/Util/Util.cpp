@@ -798,3 +798,25 @@ NWNX_EXPORT ArgumentStack GetModuleTlkFile(ArgumentStack&& args)
     CNWSModule *pMod = Utils::GetModule();
     return pMod->m_sModuleAltTLKFile;
 }
+
+NWNX_EXPORT ArgumentStack AddJSONFile(ArgumentStack&& args)
+{
+    const auto fileName = args.extract<std::string>();
+    ASSERT_OR_THROW(!fileName.empty());
+    ASSERT_OR_THROW(fileName.size() <= 16);
+    const auto contents = args.extract<std::string>();
+
+    auto alias = args.extract<std::string>();
+
+    if (!Utils::IsValidCustomResourceDirectoryAlias(alias))
+    {
+        LOG_WARNING("NWNX_Util_AddJsonFile() called with an invalid alias: %s, defaulting to 'NWNX'", alias);
+        alias = "NWNX";
+    }
+
+    auto file = CExoFile((alias + ":" + fileName + ".json").c_str(), "w");
+    bool bOk = file.FileOpened() && file.Write(contents) && file.Flush();
+    if (bOk)
+        Globals::ExoResMan()->UpdateResourceDirectory(alias + ":");
+    return bOk;
+}
