@@ -266,10 +266,11 @@ string NWNX_Util_GetModuleTlkFile();
 /// @brief Adds a json file to the UserDirectory/nwnx folder, or to the location of sAlias.
 /// @note Will override existing json files that are in the location of sAlias
 /// @param sFileName The script filename with the gff extension. (.uti, .utc, etc).
-/// @param sContents The contents of the json file (Use JsonDump() to generate contents)
+/// @param sContents The contents of the json file (Use JsonDump() to generate)
+/// @param sExtension The FileType Extension desired for the filename.
 /// @param sAlias The alias of the resource directory to add the nss file to. Default: UserDirectory/nwnx
 /// @return TRUE on success.
-int NWNX_Util_AddJSONFile(string sFileName, string sContents, string sAlias = "NWNX");
+int NWNX_Util_AddJSONFile(string sFileName, string sContents, string sExtension, string sAlias = "NWNX");
 
 /// @}
 
@@ -666,11 +667,12 @@ string NWNX_Util_GetModuleTlkFile()
     return NWNX_GetReturnValueString();
 }
 
-int NWNX_Util_AddJSONFile(string sFileName, string sContents, string sAlias = "NWNX")
+int NWNX_Util_AddJSONFile(string sFileName, string sContents, string sExtension, string sAlias = "NWNX")
 {
     string sFunc = "AddJSONFile";
 
     NWNX_PushArgumentString(sAlias);
+    NWNX_PushArgumentString(sExtension);
     NWNX_PushArgumentString(sContents);
     NWNX_PushArgumentString(sFileName);
     NWNX_CallFunction(NWNX_Util, sFunc);
