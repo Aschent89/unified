@@ -31,6 +31,8 @@
 #include <chrono>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <fstream>
+#include <iostream>
 
 using namespace NWNXLib;
 using namespace NWNXLib::API;
@@ -797,4 +799,33 @@ NWNX_EXPORT ArgumentStack GetModuleTlkFile(ArgumentStack&& args)
 {
     CNWSModule *pMod = Utils::GetModule();
     return pMod->m_sModuleAltTLKFile;
+}
+
+NWNX_EXPORT ArgumentStack AddJSONFile(ArgumentStack&& args)
+{
+    const auto fileName = args.extract<std::string>();
+    ASSERT_OR_THROW(!fileName.empty());
+    ASSERT_OR_THROW(fileName.size() <= 16);
+    const auto contents = args.extract<std::string>();
+    const auto extension = args.extract<std::string>();
+
+    auto alias = args.extract<std::string>();
+
+    if (!Utils::IsValidCustomResourceDirectoryAlias(alias))
+    {
+        LOG_WARNING("NWNX_Util_AddJsonFile() called with an invalid alias: %s, defaulting to 'NWNX'", alias);
+        alias = "NWNX";
+    }
+
+    std::string filePath = g_pExoBase->m_pcExoAliasList->GetAliasPath(alias);
+
+    std::ofstream file(filePath + fileName + extension + ".json");
+    bool bOk = file.is_open(); 
+    if (bOk)
+    {
+        file << contents;
+        file.close();
+        Globals::ExoResMan()->UpdateResourceDirectory(alias + ":");
+    }
+    return bOk;
 }
