@@ -122,7 +122,7 @@ void SetDetectModeHook(CNWSCreature* thisPtr, uint8_t nDetectMode)
     }
     else if(currentlyDetecting && !willBeDetecting)
     {
-        if (SignalEvent("NWNX_ON_DETECT_ENTER_BEFORE", thisPtr->m_idSelf))
+        if (SignalEvent("NWNX_ON_DETECT_EXIT_BEFORE", thisPtr->m_idSelf))
         {
             s_SetDetectModeHook->CallOriginal<void>(thisPtr, nDetectMode);
         }
@@ -131,7 +131,7 @@ void SetDetectModeHook(CNWSCreature* thisPtr, uint8_t nDetectMode)
             thisPtr->SetActivity(0, true);
         }
 
-        SignalEvent("NWNX_ON_DETECT_ENTER_AFTER", thisPtr->m_idSelf);
+        SignalEvent("NWNX_ON_DETECT_EXIT_AFTER", thisPtr->m_idSelf);
     }
 }
 

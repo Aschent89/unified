@@ -562,6 +562,11 @@ _______________________________________
 
     `OBJECT_SELF` = The player disconnecting from the server
 
+    Event Data Tag        | Type   | Notes
+    ----------------------|--------|-------
+    PLAYER_NAME           | string | Player name of the disconnecting client
+    CDKEY                 | string | Public cdkey of the disconnecting client
+
     @note This event also runs when a player connects to the server but cancels out of character select.
     OBJECT_SELF will be OBJECT_INVALID in this case.
 
@@ -1651,6 +1656,18 @@ _______________________________________
           \endcode
           `TARGET_OBJECT_ID` will be `OBJECT_INVALID` if the projectile is cast at a location
 _______________________________________
+    ## SetExperience Events
+    - NWNX_ON_SET_EXPERIENCE_BEFORE
+    - NWNX_ON_SET_EXPERIENCE_AFTER
+
+    `OBJECT_SELF` = The player the xp is being set on
+
+    Event Data Tag        | Type   | Notes
+    ----------------------|--------|-------
+    XP                    | int    | The xp value to be set. |
+
+    @note To set a different xp value in the BEFORE event: Skip the event and call NWNX_Events_SetEventResult() with the new value.
+_______________________________________
     ## Broadcast Attack of Opportunity Events
     - NWNX_ON_BROADCAST_ATTACK_OF_OPPORTUNITY_BEFORE
     - NWNX_ON_BROADCAST_ATTACK_OF_OPPORTUNITY_AFTER
@@ -2282,6 +2299,7 @@ string NWNX_Events_GetEventData(string tag);
 /// - Broadcast Safe Projectile event
 /// - Attack of Opportunity events
 /// - Creature Jump events
+/// - SetExperience Events
 void NWNX_Events_SkipEvent();
 
 /// Set the return value of the event.

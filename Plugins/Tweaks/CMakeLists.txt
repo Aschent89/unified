@@ -37,4 +37,6 @@ add_plugin(Tweaks
     "RangedWeaponsUseOnHitCastSpellItemProperties.cpp"
     "CastAllOnHitCastSpellItemProperties.cpp"
     "SetAreaCallsSetPosition.cpp"
-    "EquipUnequipEventTweaks.cpp")
+    "EquipUnequipEventTweaks.cpp"
+    "CutsceneModeNoTURD.cpp"
+    "CanUseItemsWhilePolymorphed.cpp")
